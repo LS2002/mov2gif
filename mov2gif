@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ $# = 1 ];then
+MOV_FILE_NAME=$1
+ffmpeg -i ${MOV_FILE_NAME} -vf scale=720:-1 -r 30 ${MOV_FILE_NAME}.gif
+
+elif [ $# = 3 ];then
+MOV_FILE_NAME=$1
+START_SECONDS=$2
+RESOLUTION=$3
+ffmpeg -i ${MOV_FILE_NAME} -vf scale=${RESOLUTION}:-1 -r 30 -ss ${START_SECONDS} ${MOV_FILE_NAME}.gif
+
+elif [ $# = 4 ]; then
+MOV_FILE_NAME=$1
+START_SECONDS=$2
+RESOLUTION=$3
+DURATION=$4
+ffmpeg -i ${MOV_FILE_NAME} -vf scale=${RESOLUTION}:-1 -r 30 -ss ${START_SECONDS} -t ${DURATION} ${MOV_FILE_NAME}.gif
+
+else
+echo "Usage: mov2gif <mov-file-name-with-mov-extension> <optional:clip-start-seconds> <optional:resolution-320-640-720-1080> <optional:length-duration>"
+exit 1
+
+fi
